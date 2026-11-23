@@ -1,0 +1,234 @@
+{
+  "version": 2,
+  "verifiedAt": "2026-10-27T10:57:43.349Z",
+  "note": "Source/reference checks; not semantic or live acceptance.",
+  "inventory": {
+    "sourceFileCount": 124,
+    "actionCount": 76,
+    "registeredHandlers": 76,
+    "controllers": [
+      "src/renderer/edit/useEditMetadataWorkflow.ts",
+      "src/renderer/edit/useEditTranscriptWorkflow.ts",
+      "src/renderer/edit/useEditWorkflow.ts",
+      "src/renderer/make/useMakeWorkflow.ts",
+      "src/renderer/performance/usePerformanceWorkflow.ts",
+      "src/renderer/publishing/usePublishingWorkflow.ts",
+      "src/renderer/publishing/useYouTubePlaylists.ts",
+      "src/renderer/settings/useAiProfileSettings.ts",
+      "src/renderer/settings/useSettingsSetupWorkflow.ts",
+      "src/renderer/useEditingSession.ts"
+    ],
+    "collections": [
+      {
+        "name": "schemaVersion",
+        "type": "number"
+      },
+      {
+        "name": "workspaces",
+        "type": "WorkspaceRecordSnapshot[]"
+      },
+      {
+        "name": "clips",
+        "type": "ClipRecord[]"
+      },
+      {
+        "name": "appSettings",
+        "type": "Record<string, SettingRecordSnapshot>"
+      },
+      {
+        "name": "jobs",
+        "type": "JobRecord[]"
+      },
+      {
+        "name": "transcripts",
+        "type": "TranscriptRecord[]"
+      },
+      {
+        "name": "metadataPackages",
+        "type": "ClipMetadataPackageRecord[]"
+      },
+      {
+        "name": "metadataVariants",
+        "type": "MetadataVariantRecord[]"
+      },
+      {
+        "name": "metadataFeedback",
+        "type": "MetadataFeedbackRecord[]"
+      },
+      {
+        "name": "youtubeVideoCache",
+        "type": "YouTubeManagedVideoRecord[]"
+      },
+      {
+        "name": "youtubeMetadataDrafts",
+        "type": "YouTubeMetadataDraft[]"
+      },
+      {
+        "name": "thumbnailCandidates",
+        "type": "ThumbnailCandidateRecord[]"
+      },
+      {
+        "name": "youtubePerformanceSnapshots",
+        "type": "YouTubePerformanceSnapshotRecord[]"
+      },
+      {
+        "name": "importedYouTubePerformanceRecords",
+        "type": "ImportedYouTubePerformanceRecord[]"
+      },
+      {
+        "name": "scheduledPosts",
+        "type": "ScheduledPostRecord[]"
+      },
+      {
+        "name": "longFormSources",
+        "type": "LongFormSourceRecord[]"
+      },
+      {
+        "name": "clipProposals",
+        "type": "LongFormClipProposalRecord[]"
+      },
+      {
+        "name": "clipProposalFeedback",
+        "type": "LongFormClipProposalFeedbackRecord[]"
+      }
+    ],
+    "aiCallers": [
+      "src/electron/services/longFormClipProposalService.ts",
+      "src/electron/services/metadataGenerationService.ts",
+      "src/electron/services/performanceDashboardService.ts",
+      "src/electron/services/thumbnailGenerationService.ts",
+      "src/electron/services/youtubeMetadataGenerationService.ts"
+    ]
+  },
+  "hashes": {
+    "docs/architecture/creator-workbench-architecture.md": "f0632d8df68e762a17cbebccc1cc312ed05799f3fe6c3185aa75009239938371",
+    "docs/architecture/creator-workspace-data-flow-and-erd.md": "303470a35e06e6d0ada6eb4dd461f578bbfaed54e41eefb186f399ba4a0977d5",
+    "package.json": "9292ae1d98c98f3d50680de81f52382651df2f7df7c6fe4ce432182e8c2848a6",
+    "src/electron/actions/appActionExecutor.ts": "509331dc87c79f68898cb73673a443824331dbde199828e9bdd7d9249c476f2d",
+    "src/electron/actions/registerCreatorWorkflowActions.ts": "45431ffa22f3e7bf81d5296de21941769356015e3bff7a0324f21f59a980ba57",
+    "src/electron/actions/registerRemainingActions.ts": "dffbc41bdcaae21e1ea57f71473d4c33d53ce2bfcb38910e8e791908d18bf5c8",
+    "src/electron/actions/remainingActionSchemas.ts": "80b9b7bd64e31e5fe3dd3274394ae019c38f2fbbe3ac0c7f1cddc7593262b693",
+    "src/electron/ipc/registerHandlers.ts": "361626ae228ee2fddd429d1e6886c8b2b03968911164d5c47e6bbf721985d2a9",
+    "src/electron/main.ts": "56afff3d5194bbd7fe5a4694a897b7e8fb558f54d730e2f53998233c502c91ea",
+    "src/electron/preload.ts": "9592ee206e451252886945e1a7e4ff1d3a405f4925200334e1797d5dbd7f1f58",
+    "src/electron/services/aiActivityService.ts": "d86d2c915b090066cbc3a8480981b914ab0f633bd41b84bbf9dc453f2424d701",
+    "src/electron/services/aiExecutionService.ts": "ed0c7c4fb42b7ac6861002bdcc426f36bf9bff0c0c02dc92debdc07d51889ee5",
+    "src/electron/services/aiLearningScope.ts": "02592d60e25418c8588b389cc2b5479941c70ea40fee5c9db396edde1a97ac3e",
+    "src/electron/services/aiProfileLearningService.ts": "7be770e6578e2c9726a628ba1a29fcc79bf75cbbb451e541f0114fbb1189b010",
+    "src/electron/services/aiProfileService.ts": "5e0032bd50e765edce00b23858ecf407335aa4412f72e8397abb797091b1cbdf",
+    "src/electron/services/clipApprovalRecovery.ts": "048c85f2e3979bd4810edf575053b1a29432e63facde6f458f7de878cd572c3d",
+    "src/electron/services/clipDataRemovalService.ts": "a7e2aadd597bfab7a8af488b4f734d534ba784ec60ac292bd7f4376295ab1638",
+    "src/electron/services/clipImportService.ts": "e52a2ec3018ab2f1d0f78519fe3ec20201b303ca2e6d38ae91fbd8e2bfe42c6d",
+    "src/electron/services/clipLibraryWatcher.ts": "9476284f64337f4a836aabeeb538df9069b7e69d3888bf5b0c14ba0ce7210749",
+    "src/electron/services/clipMetadataRepository.ts": "df2dab64f6ee93ef9507c89193e493ba0c01d764a37e71f4036bc19f10aa5428",
+    "src/electron/services/clipProposalRepository.ts": "629d927484f5f1accdcf7412f9e95a76ca49a9f10d3444e1018ec7a840ad8e76",
+    "src/electron/services/clipRepository.ts": "1aae62b2f12b3ea9695d2fdc0a196575dc69176b9349f72db1d11a81e7662d74",
+    "src/electron/services/clipTrimService.ts": "53cc02a50e648abb903a84416d0d40fadbd1d6a9a83a6592866e0f848f2512af",
+    "src/electron/services/creatorProfileLinks.ts": "e71136c18574c1842589ede9ca923a74d552c3852d5ee74726515122e18d4fe7",
+    "src/electron/services/dataManagementService.ts": "b3934e400a0c00141eb6b935817db42689b998575bc80ec51a2c3348282d8bcf",
+    "src/electron/services/database.ts": "35b7b2cf9c0a90d5c9076280c6270cd4948a2f143478f2926fc69f5052675f02",
+    "src/electron/services/importedYouTubePerformanceRepository.ts": "086cee81d301245b867f082e2a91c1cb38c599115d2b6e793288407bb1912e47",
+    "src/electron/services/jobRepository.ts": "d3296b3c716a86ce81ad7a4b5b325a8f1b3769d7091a9e28c7277b22f22ab481",
+    "src/electron/services/localAiRuntimeService.ts": "bb5018823fa159dad2fd09dc73c2bfc7bbd8e8ec3ae8a665d19eaaa27997e75a",
+    "src/electron/services/localAiScheduler.ts": "88069273e91b09e53d23e4e742bb58f1e4419b0b40b271f259a201fcacbaddb1",
+    "src/electron/services/localAiSetupService.ts": "cf258d73b50f2260387b4547de9525c9572117454345d7537a86126cdedf3aaa",
+    "src/electron/services/localMediaProtocol.ts": "6f3ee382874e241876364f1af6bd26225c23c6164b1652fc8039bbdb4283c093",
+    "src/electron/services/longFormClipProposalService.ts": "01eef36e3744b06716b81e2ca73d61e40e9bca4fac63ebb19ce8b32461f6faec",
+    "src/electron/services/longFormSourceRepository.ts": "30a3fe93110b96291ff98f22c9283b3afbcf82a2d08b3f446527e1d4a4bc8ad9",
+    "src/electron/services/mediaAnalysisService.ts": "80c7801886cb0e29a21537cc755192962587237f1f194a41e56d24933ef5dbab",
+    "src/electron/services/mediaInspector.ts": "88535f59e70907af3b7f18df906c50ed40d994dd3601b86f070e12007889fc1f",
+    "src/electron/services/metadataFeedbackRepository.ts": "04f7fa8005e0ca7bbe74f5c5e855bfd02b99cc32d02abb6af37ada4ff9f7b917",
+    "src/electron/services/metadataGenerationService.ts": "0a120e7d27d18ee86cfa2f9067475ac369380ccafa228961b181b8167ca2666b",
+    "src/electron/services/metadataScoringService.ts": "6b42d293a07aad1a2e457d23b3f014abd6386dbd41226bb7dabc68763698f1e3",
+    "src/electron/services/metadataVariantRepository.ts": "b00b820e1401b2854d57c851332a256d20629f4a793e9cd91ad7b62985e9b5e6",
+    "src/electron/services/ollamaRuntimeService.ts": "5bc168a27bc21c44b93a0f87f5a4738d0a0cbd4e8d58edca75af8153be9c32ef",
+    "src/electron/services/performanceDashboardService.ts": "174d34647552d64271519c7ba20e6de74df551515b892f2d849ccfac36fd7d9c",
+    "src/electron/services/postingScheduleService.ts": "07155136904a0e612bafc1726d004b95f31c9f06293d2a33a03f6417a9a34836",
+    "src/electron/services/runtimeTools.ts": "8b978a328ee1cad010a576e34941415f99bac61d4327c562f756a1dd38729323",
+    "src/electron/services/scheduledPostRepository.ts": "7e85291ae1266dd88eb4259f5a06fe50a463a58059c44054595272834fc4410c",
+    "src/electron/services/settingsRepository.ts": "511dc363e423dc5bfd2c2e10630dbe3b802c1fd9eb74111b9ea806f4fe33724b",
+    "src/electron/services/setupEnvironmentService.ts": "851c4284e694f4f2ffb240b6da4f085ed618cc5736e2608a1fce0ceee9e9fb23",
+    "src/electron/services/sourceFingerprint.ts": "1b10aa1711dab3cb5e8e9b8152928ec5905c58a6af9b78d95cb8309be413187f",
+    "src/electron/services/thumbnailGenerationService.ts": "24d772cbe6fb0d578302260f6c98ee01e4700e0b00369fdc1e42bc52d72b35d8",
+    "src/electron/services/transcriptRepository.ts": "b480fba0a5b97b42a53004ed847ed32b41fff42609dc20b2cdcc6be3831369ef",
+    "src/electron/services/transcriptionService.ts": "a3cb7be0d23a99a6792772020cd24ff5a6fdc82e3763f3b86fee041f8b777a1a",
+    "src/electron/services/verticalLayoutPreferences.ts": "b7873eae50ede9c6d1fd649798a27a0cd18d82f3ebeab043781368824bc03218",
+    "src/electron/services/voiceProfileService.ts": "bbd4c0252a0da32b9b395dd282d427bb3e706d199d8eed60fb36ad05ac19d23b",
+    "src/electron/services/workspaceCleanup.ts": "3c4bbcb676771199dd204bbe249953f4864384e201f90d520244c7e4c78cf2dd",
+    "src/electron/services/workspaceIndexStatus.ts": "8a7a1c2b8e651f8d011f062d91eb397f54475fa6d16c824868e56a07531bbad3",
+    "src/electron/services/workspacePreferences.ts": "78b9a97d534c53cefe1bfcb1355107b9e752f0824ebcc9ca476954114208c74b",
+    "src/electron/services/workspaceRepository.ts": "c6504833d9bb28bffffe2c5e04c2f6df1d04211a866a44633a23c90dd849beb0",
+    "src/electron/services/youtubeCredentialStore.ts": "4143a21c785200adfec79cb405240586156ac43d25b0fd64195ddb5630230445",
+    "src/electron/services/youtubeMetadataGenerationService.ts": "5ad78c696466029701b0fe57d4317c43cd4e1dc4628dfdcde70265429358fdb6",
+    "src/electron/services/youtubePerformanceSnapshotRepository.ts": "dc0e6174db334f72ebac34100c5dce53cf963936a4cfd55ff73f59d95ed0fa36",
+    "src/electron/services/youtubeService.ts": "da6dce446aa3023c65e39de9b6c4c9a7da64ad354aefd6c18664c4d03c4af5d4",
+    "src/electron/services/youtubeVideoRepository.ts": "4bde38afb507f4ea5c145a14028941c9e7b5a00f50d3ffe5555856914baa4335",
+    "src/renderer/AiActivityQueue.tsx": "e89c1bb260d6398c24ad6a5b54e93acaa9ce80e153ebcd45fdf875bfc05133cd",
+    "src/renderer/App.tsx": "b0c52ae7f9429bec625040c9af0de6592099fe90207fe0d4621422ad5faddebb",
+    "src/renderer/AppShell.tsx": "c940c001fe26c89db1e2c071e30e4292b7f7921183eaba8e03795f30065f98bc",
+    "src/renderer/ClipLibraryStatusPill.tsx": "8f549071ef7459bbab4c5551235fce33be3ec4d2dfca6b179595ee3430ad4ba4",
+    "src/renderer/ConfirmActionDialog.tsx": "f11cdafcf846cadc7f581210a8e3e48a5bd4784a78fa6f6e4eba16ed47be3e09",
+    "src/renderer/DataManagementPanel.tsx": "9afe01ee7dd56fa0b11732dfc9cae6c6f8f73ecfe800ddeb420c3e40799af237",
+    "src/renderer/InfoTip.tsx": "0429af66cf9c9c681503df09c1f9b9731d8dd31daee512e6a6398cc418a3f4ae",
+    "src/renderer/LocalAiSetupPanel.tsx": "7412fb127d98f90f8c11959ffd7f8158278add69b77eb9b9277d6c935759e3da",
+    "src/renderer/LongFormProposalPanel.tsx": "d17feb405b148cbd454a5b6e449dd59aa224fdcf1aa8541cc4d6c6d6b9b39de2",
+    "src/renderer/PageHeader.tsx": "b0ab10c27bdb295a403777d46b102244ccf74888a04c78be4c92a8b95af433d6",
+    "src/renderer/PerformanceDashboardView.tsx": "92b4c839d34c93040ff731a9e2c763bcb40b964ffe45e57c0f21fa7b8e48d827",
+    "src/renderer/PostingScheduleSettingsPanel.tsx": "928b44e45ffa84577595a9ebd777c7d69e4532fb2bef671dbcab61d109449401",
+    "src/renderer/ProposalDecisionPanel.tsx": "7db172fcbe9f2470ce48dcd230ff5d73944014e43b58156643d3ba2728e08cae",
+    "src/renderer/QueuedPostCard.tsx": "4ce9a9d4fea1c8d609ad8dc4c59a7d959485b3ee578feaa11ec6e34b8b59f01b",
+    "src/renderer/QueuedPostsPanel.tsx": "2e17f27ccc026939c546550abf3617bf9fe34c9eef80779a54874ad64d8351b1",
+    "src/renderer/ReviewClipView.tsx": "6e5fbce4f1d0ad6b25b59da8929287170f26a92e4c0734a3100815d96b0c6deb",
+    "src/renderer/SchedulePostComposer.tsx": "e52e8d8c2c7f4d0013d28c31a4b52bfe99f1263e6e6b8c51309c6adcecb437b7",
+    "src/renderer/SettingsPrimitives.tsx": "dd4c81103a5669409bf7eedea82896cc370fb4070043e440b131315b3f51f49e",
+    "src/renderer/SetupCard.tsx": "033e1c06c5b4475543f17f3784051b47679207e23faf90379307b93af74e5988",
+    "src/renderer/SpeakerContext.tsx": "52bcebbd8b881ff3f75eb7c52318b078225125c380c2d4f81ae896b784224e01",
+    "src/renderer/TimestampedTranscriptPanel.tsx": "4f25b064f8f6691f1b5370ae2c71bc8e8006c5c22fb5d87cb71075d3adf01e0f",
+    "src/renderer/VideoPlayer.tsx": "d65a727ad4ae749876c15cf76da53c271581a9a8ab3a2eedb13fbeca995b558e",
+    "src/renderer/VoiceSampleList.tsx": "4607294fe945db366b537dc89a079d95e6cfc2b8e5b36a5447339beb676ebb50",
+    "src/renderer/VoiceSampleRecorder.tsx": "3cb7e4e2deb4cd154eb1e7d195e6cf6635554acaf6de1bfe7d7b255bba94c3fa",
+    "src/renderer/WorkbenchPrimitives.tsx": "930f179e9374fab7b0c3047659854b4775d30a3226b7781f816ecf6fac0dbc67",
+    "src/renderer/YouTubePlaylistPicker.tsx": "5b56e15ae29659cc3c824dbfab9ec3f4749050ce85d5c43dc3575f49dca397a8",
+    "src/renderer/YouTubeVideoLibrary.tsx": "3820f1984f946fb74ba6cb814dd7fd7ea76fc053665bfd0e561c28bca3280288",
+    "src/renderer/aiActivity.css": "951193fbd8bdb458a1681862368c48a86d039e1dd07dc4c259f9ef7f57be9c10",
+    "src/renderer/edit/editWorkflowHelpers.ts": "8c492a5141ff4b95ae78256db02f21f61a3e4e3c541e2d79071e156ea9396061",
+    "src/renderer/edit/reviewedMetadata.ts": "aebad4e34c0674bcc6468482425bbb0ad7a284571fcc6c46e22cac32fad40f1b",
+    "src/renderer/edit/useEditMetadataWorkflow.ts": "28ba34e9947c4b2fb52df8a380f3658f302e13486c66b315b4343c2b31c7e1ab",
+    "src/renderer/edit/useEditTranscriptWorkflow.ts": "caf79c9fd666ce7887751164810f30ae0ea1f7ed7a3fa324641b394a0e87c15a",
+    "src/renderer/edit/useEditWorkflow.ts": "e76c9c453788b6db76dcf5985b2d76d91e407ddda015a3fd61c1b2a78516930c",
+    "src/renderer/main.tsx": "4e1e3e23cfcee1c61773d696fa916deb64f61882678d9536ed3e79f13550d5c4",
+    "src/renderer/make/useMakeWorkflow.ts": "9d651af2d8561f541455b23dc042e0ea89e610272f344ca8814122ffdc6f046e",
+    "src/renderer/performance/usePerformanceWorkflow.ts": "8cc17080e34ca1b8d2a4c1f4976a829e1909fd30df807a374c3a63dcc70f01fd",
+    "src/renderer/publishing/usePublishingWorkflow.ts": "7e4c16309eb970e682a144a99df2dc677c0b796cb2fcf269672706352637085a",
+    "src/renderer/publishing/useYouTubePlaylists.ts": "21ce3581780467d70dd973e5eec2451976a17c889814e6de94ee6f7cd00faf7c",
+    "src/renderer/settings/aiProfileDraft.ts": "f80fd6049d19707d1d10563935e201404e1981437457888f0d82372427d12bb4",
+    "src/renderer/settings/useAiProfileSettings.ts": "c2e3f0b2036fc43bf4d99662b8945d9e52d64df9efccd2801ac366af56f63433",
+    "src/renderer/settings/useSettingsSetupWorkflow.ts": "e8675944aae0bcce924956c207125472ce20915171fe72c16cd46073be30c988",
+    "src/renderer/styles.css": "f27908e96e64bc7d69ecfd58f0ddd4ada5cc374e326b64d4c716a0ecfcf22a2e",
+    "src/renderer/useEditingSession.ts": "6456a1d71a6bb3677f79ec33515024a0f759c85cc58e81b17f5b3fc8728b6d22",
+    "src/renderer/vite-env.d.ts": "bf144e3cdae616e27b064c8c2b94b14525e220fb3facc4cb4884d21b65eb5aa5",
+    "src/shared/aiActivity.ts": "3174956a8b1c8583d74c8f3d3da9850aca4f76f10f4bad0e9cc8d5d9d8ffdddd",
+    "src/shared/aiProfileTasks.ts": "3f7fcbc1356ecc3c840be7451dda7bced77718bdb29f1275d998638c77d12a57",
+    "src/shared/appActions.ts": "2994da10a2251ec295deeccd0a7ff78168842c1d106a1f3c0f81ac9e74080514",
+    "src/shared/clipFileName.ts": "72a9a2b39315cff3efb09de7a133438bd8a1507bc807fe6e74c1951b8f54bf34",
+    "src/shared/clipLibraryPresentation.ts": "5d6912526a6f06f48383eec52b0b174f22e4b09768867b53454cd523e3b8a566",
+    "src/shared/clipProposalPresentation.ts": "799256d68590501f4098d887e133549202d8741a5ed2fc653c7832d1fcc975eb",
+    "src/shared/contracts.ts": "479581261173a904c9b1e02623edd137512472a08cd52c9373f2db80bb88c52a",
+    "src/shared/creatorProfileLinks.ts": "1a29416d72e7b641d51c9c7883cde341105df6ef861f95c8d93edd151674cc20",
+    "src/shared/jsonResponse.ts": "ca5b6fa8f9f0c76d58625dab4382e2af2fbc8b47d75b7a1bd9193aaf2113b027",
+    "src/shared/localAiSetup.ts": "74d2edafea5bb11e4aa1a9c67989efed8f1b3a89679f13e5d81f78b760aef3bf",
+    "src/shared/platformLimits.ts": "5c42780cea2c0792fa62e79476b8d013fa56d7f9367a546deccb0589bac44b30",
+    "src/shared/postingSchedule.ts": "c11593ad66e460a3853ea21596d831d7c4374de9825fe751aa0311d56fed8637",
+    "src/shared/setupState.ts": "fdbd836b15175033e355df463754e840c20248d5df75196a03f9e6ab47a82c7f",
+    "src/shared/speakerContext.ts": "91981e11edaa8de9b1f1745c7094b96b9825c0d512c404a289021a2700182ac9",
+    "src/shared/speakerProfiles.ts": "6e9b47fb02ebc3f8e969b26a7200de0f0e105b907c5c7b269da88fb28ba36b48",
+    "src/shared/stackedVerticalLayout.ts": "0a47ed21290899e04892518f93ecbac38ab8bec325badb667824460a0842ab8f",
+    "src/shared/transcriptSegments.ts": "bef3ce388d903a8ec38a9c5ec80fb9d5d849a6b9d87c4d4c11d8c49f364956aa",
+    "src/shared/videoTimeline.ts": "7f710068ff6d350d85da1cab61be5166a34e9d2808b3750694879ae3ccf713ac",
+    "src/shared/workflowOutcome.ts": "4f8fd4582dcc119dd780ea77507556e07ff0ff303e373fce6fd2cb92ba461904",
+    "src/shared/workflowPresentation.ts": "26dfb01d571a7d18af378bbb58ec4227e7320a70b36b2240c56acf08d209a7c8",
+    "src/shared/workflowSelection.ts": "68d3074c1e4c7cef8b190ef2413497ddf2e7dc178d1321ad5ced585fab9c3d48",
+    "tsconfig.electron.json": "b70c85214b882cfda6de23d88701200a4489736fe539d976355ce6e89318c51d",
+    "tsconfig.json": "4f1d09b36865388f3a4932b4a5ca17447ebe69d592bf37919877c52ad75d04f8"
+  }
+}

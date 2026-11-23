@@ -1,0 +1,328 @@
+Creator Workbench Release Rollout Plan
+======================================
+
+Status: Historical invited-beta plan. The portfolio concept build is a
+separate one-off demonstration. The rollout and update phases below record
+the earlier plan.
+
+Reconciliation note: 2026-09-21
+------------------------------
+The next delivery milestone is an invited beta with regular updates, accepted
+2026-09-23. The owner personally shares the download; installer and update
+access require no authentication. Source repository visibility is separate.
+See docs/adr/ADR-0008-invited-beta-distribution.md. This broader release plan
+does not authorize execution of every phase or publication.
+
+Local AI setup already contains download progress, cancellation, partial-file
+resume, free-space checks and SHA-256 verification. Phase 3 checkboxes remain
+open until their complete acceptance criteria are verified; unchecked does
+not necessarily mean no implementation exists. Clean-account installation,
+packaged payload, update and connected-account evidence remain separate.
+
+Purpose
+-------
+Move the current Creator Workbench build from private testing to a signed,
+repeatable Windows release with a controlled auto-update channel and clear
+first-run documentation.
+
+Final version-one feature gate (accepted 2026-09-23)
+--------------------------------------------------
+Release to two invited testers only after these features work and pass their
+acceptance criteria in product plan Section 3.1 / ADR-0010:
+- [ ] Owned-video AI metadata suggestions and reviewed single/bulk updates,
+      including draft safety, conflict/partial-failure handling and live API checks.
+- [ ] Actual local AI thumbnail generation with an optional highest-priority
+      user prompt, supporting context/frames, multiple candidates, validated
+      JPEG output and explicit selected-image API application where supported.
+- [ ] Clips-only burned-in subtitle export with minimal placement/size controls,
+      speaker colours, correct trim timing and protected source/transcript data.
+These gates supplement release hardening; they do not replace it. Do not count
+copied frames as image generation or existing SRT/caption export as burn-in.
+- [ ] Settings Local AI Setup scans hardware and recommends compatible public
+      model/runtime options per app process, including thumbnail generation;
+      shows resource needs and verifies readiness. Recommendations do not
+      silently change saved model/task assignments.
+The app must assess tester hardware; packaged acceptance still covers both machines.
+Version one is the milestone name; package version/tag remains undecided.
+
+Current position
+----------------
+- Electron Forge packaging exists with Squirrel.Windows and ZIP makers.
+- The package scripts provide check, build, test, package, and make commands.
+- The current package version is 0.1.0.
+- No release publisher is configured.
+- No Windows code-signing configuration is complete.
+- No Electron auto-update client or update channel is configured.
+- The hardening checklist still has renderer extraction, dead-code evidence,
+  and final verification work outstanding.
+- The data-flow improvement checklist still has relationship validation,
+  renderer workflow-session work, and final end-to-end verification outstanding.
+- The current Google OAuth project should remain in Testing for the named
+  private tester until production readiness is complete.
+
+Recommended release strategy
+----------------------------
+- Support Windows x64 first.
+- Use the Squirrel Setup.exe as the primary installer.
+- Keep the ZIP artifact as a fallback and diagnostic build.
+- Start with one Beta update channel.
+- Use separate development/testing and production Google Cloud projects.
+- Download updates in the background only when safe, then install on restart.
+- Do not silently download large AI models during installation.
+- Use the guided first-run setup for runtimes, models, folders, and YouTube.
+- Add Stable when preparing public release, after beta upgrade and recovery procedures are proven.
+
+Execution rule
+--------------
+An item is checked only after implementation, focused verification, and the
+relevant full checks pass. Do not delete or rewrite user data as part of this
+rollout. Preserve existing dirty worktree changes and review each release
+slice before moving to the next one.
+
+Phase 0: Freeze and baseline
+----------------------------
+- [ ] Create a release branch from a clean, reviewed commit.
+- [ ] Record the current version, commit hash, Node/npm versions, Electron
+      version, and supported Windows architecture.
+- [ ] Run npm.cmd run check.
+- [ ] Run npm.cmd run build.
+- [ ] Run npm.cmd test.
+- [ ] Update the hardening checklist with the actual test count.
+- [ ] Do not remove uncertain legacy code; only remove candidates with
+      recorded static, dynamic, persistence, test, and smoke evidence.
+
+Phase 1: Complete release-critical hardening
+---------------------------------------------
+- [ ] Complete remaining cross-entity relationship validation.
+- [ ] Complete renderer workflow-session extraction where stale state can
+      affect users.
+- [ ] Verify Make -> Edit -> YouTube -> captions -> Performance.
+- [ ] Verify restart during transcription, local AI, export, upload, and
+      caption operations.
+- [ ] Verify shutdown recovery and reconciliation-required states.
+- [ ] Verify credentials and tokens never appear in JSON, logs, diagnostics,
+      crash reports, or distributable bundles.
+- [ ] Verify shared Ollama is never stopped by Creator Workbench.
+- [ ] Verify manual-only YouTube refreshes remain manual.
+- [ ] Add a safe workspace backup/export path before migrations or upgrades.
+- [ ] Mark only individually verified hardening items complete in
+      docs/hardening-checklist.md.
+
+Phase 2: Make the app cross-user safe
+--------------------------------------
+- [ ] Scan for hard-coded paths containing personal home directories, repository paths,
+      or development-only folders.
+- [ ] Ensure app data, credentials, database files, logs, and generated media
+      use per-user OS directories.
+- [ ] Ensure packaged builds do not depend on src, test, .local-tools, or
+      .local-models.
+- [ ] Confirm workspace folders are selected or created during first run.
+- [ ] Use one selected workspace root by default, creating clearly named
+      subfolders for clips, long-form sources, transcriptions, exports, and
+      generated assets.
+- [ ] Preserve advanced individual-folder overrides for users who already
+      have separate libraries.
+- [ ] Add clear missing-folder, inaccessible-folder, and removable-drive
+      states.
+- [ ] Ensure persisted paths are normalized and revalidated on startup.
+- [ ] Test a Windows account with a different username and a path containing
+      spaces.
+- [ ] Test a machine with no local models.
+- [ ] Test CPU fallback and NVIDIA GPU detection, including the tester's RTX
+      5070 Ti setup.
+
+Phase 3: Finish the first-run setup
+------------------------------------
+- [ ] Add a first-run checklist covering workspace folders, FFmpeg, Whisper,
+      local AI runtime, model selection, and YouTube connection.
+- [ ] Make every setup step explicit and resumable.
+- [ ] Show hardware detection without assuming CUDA is available.
+- [ ] Recommend a model based on detected hardware, but let the user choose.
+- [ ] Download runtimes and models through the app with progress,
+      cancellation, retry, free-space checks, and integrity validation.
+- [ ] Store models outside the installation directory.
+- [ ] Explain storage cost before downloading large models.
+- [ ] Verify every downloaded runtime and model before marking it ready.
+- [ ] Provide a Run setup check action after installation.
+- [ ] Ensure setup can be reopened later from Settings.
+
+Phase 4: Package identity and installer quality
+------------------------------------------------
+- [ ] Choose the final product name, publisher name, application ID, icon,
+      and installer name.
+- [ ] Move the version from 0.1.0 to a deliberate semantic versioning scheme.
+- [ ] Add a changelog and release-notes format.
+- [ ] Confirm Squirrel first-run, uninstall, shortcut, and Start Menu behavior.
+- [ ] Confirm app-owned data survives an application update.
+- [ ] Confirm uninstall behavior is documented and does not unexpectedly
+      delete user media or workspace data.
+- [ ] Build from a clean checkout with no developer-only assets.
+- [ ] Inspect the packaged application for source files, tokens, client
+      secrets, local paths, and unintended model files.
+- [ ] Produce and record SHA-256 checksums for every release artifact.
+
+Phase 5: Windows code signing
+------------------------------
+- [ ] Choose a Windows Authenticode certificate provider or managed signing
+      service.
+- [ ] Prefer a signing method that keeps the private key outside the
+      repository and CI workspace.
+- [ ] Store certificate credentials only in protected CI secrets or a local
+      secure signing environment.
+- [ ] Configure Squirrel signing through environment variables rather than
+      committed passwords.
+- [ ] Sign the application executable and installer artifacts.
+- [ ] Apply trusted timestamping.
+- [ ] Verify signatures with Windows Get-AuthenticodeSignature.
+- [ ] Test installation on a clean Windows machine.
+- [ ] Record that signing reduces trust friction but does not instantly
+      guarantee strong SmartScreen reputation for a new publisher.
+
+Phase 6: Reproducible release CI
+--------------------------------
+- [ ] Add a Windows GitHub Actions release workflow.
+- [ ] Pin Node.js 24.18.0 and npm 11.16.0.
+- [ ] Run npm ci.
+- [ ] Run check, build, and tests before packaging.
+- [ ] Run electron-forge make.
+- [ ] Sign artifacts only after all tests pass.
+- [ ] Generate checksums and a machine-readable release manifest.
+- [ ] Upload the installer, .nupkg, RELEASES, ZIP, checksums, and release
+      notes.
+- [ ] Publish releases from version tags such as v0.2.0.
+- [ ] Keep the first few releases as drafts for manual review.
+- [ ] Never publish a release when signing, tests, or artifact inspection
+      fails.
+
+Phase 7: Add auto-updates
+-------------------------
+- [ ] Choose the update host:
+      - [ ] Public repository: GitHub Releases with the Electron update
+            service.
+      - [ ] Private repository: static storage or a dedicated
+            Squirrel-compatible update endpoint.
+- [ ] Add the update client in the Electron main process, not the renderer.
+- [ ] Add a typed update state exposed through preload.
+- [ ] Add a compact Settings card showing current version, update status, and
+      release channel.
+- [ ] Add Check for updates, Download update, and Restart to install states.
+- [ ] Do not interrupt active transcription, AI, export, or upload jobs.
+- [ ] Do not check for updates during Squirrel's --squirrel-firstrun launch.
+- [ ] Keep the first release on a single Beta channel with unauthenticated HTTPS downloads.
+- [ ] Add Stable when public release becomes the milestone and recovery procedures are proven.
+- [ ] Test no update, available update, failed download, interrupted download,
+      restart installation, and rollback to the previous release.
+
+Phase 8: Google and YouTube release readiness
+----------------------------------------------
+- [ ] Keep the current development OAuth project in Testing for
+      ISimonEnigmaI.
+- [ ] Add both invited testers' Google accounts as test users.
+- [ ] Document that test authorizations and offline refresh tokens can expire
+      after seven days.
+- [ ] Create a separate production Google Cloud project and OAuth client.
+- [ ] Configure production consent-screen branding, support contact, privacy
+      policy, and data-use explanation.
+- [ ] Remove the client secret from normal desktop setup where possible.
+- [ ] Request only the scopes required by enabled features.
+- [ ] Submit the production app for Google OAuth verification where required.
+- [ ] Review the YouTube API compliance/audit process before enabling public
+      publishing.
+- [ ] Test private, unlisted, public, scheduled, metadata, playlist,
+      thumbnail, and caption operations with the production project.
+- [ ] Do not assume moving OAuth to In production automatically enables public
+      YouTube publishing.
+
+Phase 9: Private beta
+----------------------
+- [ ] Give both invited testers the signed installer and confirm their accounts/hardware.
+- [ ] Provide a short first-run guide.
+- [ ] Test installation under a fresh Windows account.
+- [ ] Test setup with no models installed.
+- [ ] Test his NVIDIA hardware detection and CPU fallback.
+- [ ] Test workspace folder creation and existing-folder selection.
+- [ ] Test YouTube reconnect and expired-token recovery.
+- [ ] Test the complete Make -> Edit -> YouTube workflow.
+- [ ] Record every failure with app version, operation, logs, and reproduction
+      steps.
+- [ ] Fix release-blocking issues before adding new features.
+
+Phase 10: Public release
+-------------------------
+- [ ] Complete OAuth verification and YouTube audit requirements.
+- [ ] Publish a privacy notice and support contact.
+- [ ] Publish release notes and known limitations.
+- [ ] Publish the signed installer and update metadata.
+- [ ] Verify the update from the previous signed version.
+- [ ] Monitor support reports and failed update/install cases.
+- [ ] Keep the previous release available for manual recovery.
+- [ ] Pause the update channel immediately if a release corrupts state or
+      prevents startup.
+
+Documentation deliverables
+--------------------------
+- [ ] Create docs/release/README.md with the release process overview.
+- [ ] Create docs/release/building.md with local check, build, package, and
+      artifact inspection instructions.
+- [ ] Create docs/release/signing.md with certificate handling, timestamping,
+      and signature verification.
+- [ ] Create docs/release/publishing.md with version tags, CI secrets,
+      release artifacts, and update hosting.
+- [ ] Create docs/release/first-run.md with folders, runtimes, models,
+      hardware checks, and YouTube setup.
+- [ ] Create docs/release/testing-matrix.md with clean install, upgrade,
+      rollback, GPU, CPU, missing-model, and workflow tests.
+- [ ] Create docs/release/google-youtube-readiness.md with OAuth status,
+      scopes, verification, audit, and tester setup.
+- [ ] Update README.md with developer commands, package commands, supported
+      platform scope, first-run setup, update behavior, and troubleshooting.
+- [ ] Add a release checklist to the decision log and link it from the current
+      product plan.
+
+Release gates
+-------------
+Private beta gate:
+- All three final version-one feature gates above pass in the packaged build.
+- Both invited testers receive the installer and have documented setup/support steps.
+- Signed Windows installer installs on a clean account.
+- First-run setup works without developer files or local models.
+- Both testers can authorize their owned YouTube channels as listed test users.
+- Core Make -> Edit -> YouTube workflow completes or reports actionable
+  failures.
+- User data survives restart and application upgrade.
+- Regular-update readiness is demonstrated with a signed build A -> build B
+  upgrade preserving data and avoiding active-job interruption; retain a
+  documented recovery path. Signing and hosting choices remain open.
+
+Public release gate:
+- Production OAuth project and required verification are complete.
+- YouTube public publishing/audit requirements are understood and satisfied.
+- CI creates reproducible, signed artifacts and checksums.
+- Auto-update succeeds from at least one previous signed release.
+- Rollback, support, backup, and recovery instructions are documented.
+- Final check, build, test, clean-install, upgrade, and end-to-end smoke checks
+  pass.
+
+Important vendor references
+---------------------------
+- Electron autoUpdater documentation:
+  https://www.electronjs.org/docs/latest/api/auto-updater/
+- Electron update guide:
+  https://www.electronjs.org/docs/latest/tutorial/updates
+- Electron Forge auto-update guide:
+  https://www.electronforge.io/advanced/auto-update
+- Electron Forge Squirrel.Windows maker:
+  https://www.electronforge.io/config/makers/squirrel.windows
+- Google Cloud app audience and Testing/In production status:
+  https://support.google.com/cloud/answer/15549945
+- YouTube video API upload/public-visibility restrictions:
+  https://developers.google.com/youtube/v3/docs/videos
+
+Safest execution order
+----------------------
+Hardening -> cross-user setup -> packaging -> signing -> CI -> updater ->
+Google production readiness -> private beta -> public release.
+
+Auto-updates should not be the first implementation slice. A signed installer
+must first be installable, upgradeable, recoverable, and testable on a clean
+machine before the update channel is allowed to modify user installations.

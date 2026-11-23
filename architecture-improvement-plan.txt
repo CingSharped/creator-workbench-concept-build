@@ -1,0 +1,96 @@
+Creator Workbench architecture improvements
+Updated: 2026-10-23
+
+Objective: consistent AI execution, safe workflow ownership and smaller application
+boundaries while retaining Electron, local processing and explicit review/save.
+
+1. Shared AI request/outcome boundary - IMPLEMENTED; USER TESTING SUCCESSFUL
+   Reuse the existing runtime scheduler. Route current text/vision features through
+   one request interface. Carry completed/cancelled/failed outcomes across IPC.
+   Preserve task-specific evidence, parsing, retries and strict-mode decisions.
+   Acceptance: routing, cancellation, genuine failures, scheduler and feature
+   regressions; live Find Clips cancellation after a full Electron restart.
+   Implemented: all current text/vision generation feature callers use
+   aiExecutionService; canonical action IPC can return typed outcomes; Make reads
+   those outcomes directly. Existing compatibility methods and runtime scheduling
+   remain in place. Main/preload changes require a full application restart.
+   Automated checks: TypeScript check, production renderer/main build and all
+   200 Node tests passed. Serialized IPC tests use mocked Electron; live model
+   execution/restart acceptance was subsequently reported successful by the user.
+
+2. Late-result ownership - IMPLEMENTED; USER TESTING REPORTED NO ISSUES
+   Extend existing metadata request guards to transcription, transcript saves,
+   speaker operations and other identified gaps. Persist results to their original
+   owner; update visible drafts only when their editing session still matches.
+   Acceptance: switch clips and edit again while earlier work completes.
+   Implemented: asset-visit epochs, draft revisions and request scopes in Edit,
+   Make and the timed transcript panel; guarded refresh/callback adoption; dirty
+   drafts remain protected from subsequent background polling.
+   Automated verification includes React StrictMode and deferred responses:
+   twenty Edit cases, sixteen Make cases and four actual transcript-panel cases.
+   User reported no issues in app testing; this is not a claim that every race
+   was reproduced manually.
+
+3. Scoped learning and bounded evidence - IMPLEMENTED; LIVE ACCEPTANCE PENDING
+   Scope feedback to its originating profile/task and define deliberate context
+   limits and provenance. Keep saved configuration changes explicit.
+   Acceptance: unrelated profiles do not influence each other; no implicit writes
+   to prompts, model/task assignments or scoring rules.
+   Implemented: immutable task/profile provenance scoping, latest-decision
+   deduplication, bounded context, conservative selected-variant attribution for
+   metadata examples, and stored learning-record IDs for metadata/discovery.
+   Unknown-origin history remains stored and is excluded from automatic learning.
+   TypeScript checks, production builds and all 210 Node tests passed.
+
+4. Publishing and remaining shared workflow ownership - IMPLEMENTED; USER TESTING REPORTED NO ISSUES
+   Give publishing a reviewed clip/metadata handoff and own status/recovery state.
+   Review remaining Settings/background-refresh coupling for concrete risks.
+   Acceptance: scheduling, clip switching, failed calls, captions and upload recovery.
+   Implemented: publishing/playlist controllers, copied reviewed metadata handoff,
+   composer/account capture, guarded queue snapshots and per-post recovery,
+   account-visit playlist guards, and independently owned recurring settings.
+   Settings/OAuth and workspace polling policy remain in the shell; scheduling
+   settings now belong to publishing. Backend publishing actions are unchanged.
+   TypeScript checks, production builds and all 211 Node tests passed, including
+   17 publishing and 22 Edit React scenarios with mocked APIs. Live acceptance
+   remains separate; automated checks did not upload to YouTube. The user later
+   reported app testing without issues; this does not certify every race or
+   recovery path was manually exercised.
+
+5. Remaining application-action contracts - IMPLEMENTED; USER TESTING REPORTED NO ISSUES
+   Incrementally migrate direct mutation implementations through validated canonical
+   actions with operation identity. Preserve public adapters and confirmation rules.
+   Acceptance: input rejection, confirmation and adapter routing coverage.
+   Implemented: 32 additional canonical actions for settings, profiles, local AI
+   setup, account changes, analytics, legacy index clearing and remaining exports.
+   Trimmed clip export reuses its existing action. IPC retains native pickers,
+   reads/subscriptions and public result formatting; write-service imports are
+   forbidden there by an architecture regression check.
+   Unknown inputs are validated before mutation. AI prompt/model assignment
+   saves require confirmation, preserving the explicit approval boundary.
+   TypeScript checks, production builds and all 222 Node tests passed. Live
+   acceptance needs a full Electron restart; no real accounts or downloads were
+   changed during the new mocked-service tests.
+   User subsequently reported the tested actions and SRT Save As behaviour
+   working. This is not a claim that every adapter/edge case was exercised live.
+
+6. Architecture reference and refresh skill - IMPLEMENTED; SKILL RUN AND VALIDATED
+   Refresh diagrams from the final source; verify or deliver the previously requested
+   repeatable inspection/update skill with its validator.
+   Implemented 2026-10-23: installed creator-workbench-architecture in the user's
+   personal skills directory. Its source-only inspector checks action registration
+   coverage, source evidence references and a source/configuration/doc hash snapshot.
+   The skill passed quick_validate; the audit passed and rejected changed source
+   and broken references in an isolated fixture. No app behaviour changed here.
+   Updated system/controller diagrams and reconciled the entity/data-flow reference:
+   124 source files, 76 catalogue actions and exactly 76 registered handlers.
+   Corrected stale startup recovery, settings action and credential-storage claims.
+   Thumbnail candidates are accurately described as copied images plus an AI brief,
+   not image synthesis. Source hashes do not prove diagram semantics or live readiness.
+
+Already implemented: recoverable clip approval and artifact safeguards; shared AI
+scheduling and activity visibility; Performance, Make, Edit and AI/local-setup
+Settings controllers; cancellation-message presentation regression fix.
+
+Automated verification, live acceptance and release readiness are separate.
+Do not mark a list item complete solely because its files have moved.

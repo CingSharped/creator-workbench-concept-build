@@ -1,0 +1,115 @@
+# Creator Workbench
+
+Creator Workbench is a Windows desktop proof of concept for turning a long recording into a reviewed, schedulable YouTube clip in one app. It transcribes footage locally, suggests moments to clip, and lets the creator check the cut, correct the transcript, and review draft metadata before scheduling the post. Exports preserve the original footage.
+
+The build demonstrated that those steps can work together in one local-first workflow while keeping publishing decisions with the creator. This repository preserves the concept build for demonstration. Any future Creator Workbench 2.0 would be developed separately.
+
+[Read the portfolio summary](docs/portfolio.md)
+
+## Try it on Windows
+
+The Windows x64 ZIP is planned for [GitHub Releases](https://github.com/CingSharped/creator-workbench-concept-build/releases). Once the **Creator Workbench Concept Build** release is available:
+
+1. Download the Windows x64 ZIP from the release assets.
+2. Extract the entire ZIP to a folder, then open `creator-workspace.exe` from that folder.
+3. Import a local clip to explore the workflow. Check **Settings** for media tools and local model setup. Connect a YouTube account if you want to try scheduling.
+
+The packaged app runs without Node.js or a source checkout. To build from source, see the setup instructions below.
+
+## Planning History
+
+The [product plan](creator-workspace-current-product-plan-2026-08-11.md) and [release plan](creator-workspace-release-rollout-plan.txt) record the earlier invited beta proposal. The [decision log](decision-log.md) records how the design evolved.
+
+Local desktop app for:
+
+- importing existing clips
+- local transcription
+- transcript speaker review with creator/collaborator voice samples
+- metadata generation
+- YouTube scheduling and publishing workflows, with broader platform handoff planning
+
+Performance is scoped to the user's owned YouTube account, channel history, and local workspace evidence; public YouTube trend discovery is not part of the current product.
+
+## Planning References
+
+- [Documentation reconciliation and pending decisions](docs/documentation-reconciliation.md)
+- [Current architecture and data flow](docs/architecture/creator-workspace-data-flow-and-erd.md)
+- [Current architecture diagrams and source evidence](docs/architecture/creator-workbench-architecture.md)
+
+- [Current product plan and MVP closure](creator-workspace-current-product-plan-2026-08-11.md)
+- [Decision log](decision-log.md)
+- [Architecture decision records](docs/adr/README.md)
+- [Active component-first UI plan](creator-workspace-component-first-ui-rebuild-plan-2026-08-08.md)
+- [Archived planning documents](docs/archive/README.md)
+- [Supporting research](docs/research/README.md)
+
+## Implemented Foundation
+
+This repository currently includes:
+
+- Electron main/preload/renderer split
+- React + TypeScript + Vite renderer
+- local JSON-backed workspace storage
+- clip import flow
+- local transcription plus in-app transcript and `SRT` editing
+- speaker assignment, creator/collaborator voice samples, and low-confidence review filters
+- local metadata generation with review-first candidate selection
+- metadata prompt assembly grounded in corrected transcript state and collaborator presence context
+- environment detection for `ffprobe`, `ffmpeg`, and `whisper.cpp`
+
+## Local Prerequisites
+
+- Node.js and npm
+- FFmpeg / `ffprobe` for richer media inspection and transcript audio extraction
+- `whisper.cpp` / `whisper-cli` plus a Whisper `.bin` model for local transcription
+
+## Toolchain Setup
+
+This repo is pinned to:
+
+- Node.js `24.18.0`
+- npm `11.16.0`
+
+Toolchain pinning lives in:
+
+- [package.json](package.json) via `engines` and `packageManager`
+- [mise.toml](mise.toml) for `mise`
+- [.node-version](.node-version) as a lightweight fallback version file
+
+Recommended manager:
+
+- `mise`
+
+If you prefer not to use a version manager, install Node.js `24.18.0` manually and ensure npm resolves to `11.16.0`.
+
+Note:
+
+- This machine does not currently have `winget` available.
+- While checking install options on 2026-07-19, I found that Volta's upstream repo now marks the project as unmaintained, so this repo no longer treats Volta as the default recommendation.
+- If you are still on Node 18, upgrade before running the app. Node 18 is end-of-life and below the version range we want to standardize on for this project.
+
+## Commands
+
+After installing dependencies:
+
+```bash
+npm install
+npm run dev
+```
+
+## Local Runtime Layout
+
+The app now supports a workspace-local runtime layout and will auto-detect these folders before falling back to PATH:
+
+- `.local-tools/ffmpeg`
+- `.local-tools/whisper.cpp`
+- `.local-models/whisper`
+
+That means portable binaries can live inside the repo without requiring a machine-wide install.
+
+## Notes
+
+- This repo now pins its Node/npm toolchain so local development is repeatable across machines.
+- The app still falls back to basic file metadata when richer media inspection is unavailable.
+- Workspace data is currently stored in a local JSON file so the MVP stays portable and avoids native database setup friction on Windows.
+- The local transcription flow is now implemented end to end: audio extraction, `whisper.cpp` execution, transcript persistence, and SRT export.

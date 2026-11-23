@@ -1,0 +1,51 @@
+{
+  "name": "creator-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local creator workspace for clip management, metadata generation, and scheduling.",
+  "author": "Underbeast",
+  "packageManager": "npm@11.16.0",
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "npm": ">=11 <12"
+  },
+  "main": "dist/electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:renderer\" \"npm:dev:electron\" \"npm:dev:app\"",
+    "dev:renderer": "vite",
+    "dev:electron": "tsc -p tsconfig.electron.json --watch --preserveWatchOutput",
+    "dev:app": "wait-on dist/electron/main.js tcp:5173 && electron .",
+    "build": "npm run build:renderer && npm run build:electron",
+    "build:renderer": "vite build",
+    "build:electron": "node scripts/clean-electron-build.cjs && tsc -p tsconfig.electron.json",
+    "check": "tsc --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "test": "node --test test/*.test.cjs",
+    "start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.0.0",
+    "@electron-forge/maker-squirrel": "^7.0.0",
+    "@electron-forge/maker-zip": "^7.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^9.0.0",
+    "electron": "^30.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "wait-on": "^8.0.0"
+  },
+  "allowScripts": {
+    "electron@30.5.1": true,
+    "electron-winstaller@5.4.4": true,
+    "esbuild@0.21.5": true
+  }
+}

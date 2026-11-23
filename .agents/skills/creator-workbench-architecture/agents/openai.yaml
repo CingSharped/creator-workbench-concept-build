@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creator Workbench Architecture"
+  short_description: "Inspect source and refresh current architecture diagrams"
+  default_prompt: "Use $creator-workbench-architecture to inspect this checkout, refresh the architecture diagrams, and show the current architecture."

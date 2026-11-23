@@ -1,0 +1,275 @@
+CREATOR WORKBENCH: REVIEWED METADATA LESSONS
+Date: 2026-10-25
+Status: Implemented in the working tree; live channel/model acceptance pending.
+
+USER AMENDMENT, 2026-10-26 (supersedes earlier gating requirements below):
+Learning must help generation, never reject generated candidates. The automatic
+judge, corrective retry, grounding withholding, complete-package gate and
+provenance/evidence-based UI hiding are removed. All readable AI candidates are
+returned, including partial output. Keep clip ownership and preserve user draft
+edits; completed suggestions remain available alongside those edits. Historical
+metadata still stays out of prompts. Old references to grounding gates below
+describe the original plan, not the amended implementation.
+
+Diagnosis: the local server ignored the old response_format.schema placement.
+A verifier returned five supported verdicts in an array; the object-only parser
+counted them all as rejected. A synthetic real-server probe confirmed that nesting
+the schema under response_format.json_schema enforces it correctly. The transport
+format is corrected; the unwanted judging service is removed entirely.
+
+Amended verification: TypeScript checks, production build, diff checks and all
+237 tests pass. A real-model run for the affected circumference clip returned
+all eight candidates in one request using a scratch database. The live user
+store was not changed by this verification; restart Electron to load the backend.
+
+1. OBJECTIVE AND CONFIRMED DIRECTION
+
+Replace metadata learning from historical examples with AI-proposed, user-approved,
+versioned lessons. Generation receives the selected clip's evidence and applicable
+approved guidance. Other clips' metadata must never enter that request.
+
+Confirmed by the user:
+- Remove the existing metadata learning mechanics that reuse old clip metadata.
+- Analyse successful clips and derive lessons rather than injecting donor examples.
+- Plan the replacement and removal together.
+
+Execution baseline, authorized by the request to execute this plan:
+- Exclude old titles, descriptions, tags and generated variants from BOTH lesson
+  analysis and metadata generation. Analyse clip content plus performance instead.
+- Replace metadata adaptive feedback guidance too. Approval/rejection remains review
+  history; it cannot silently influence generation outside approved lessons.
+- Keep unrelated clip-discovery learning unchanged in this bounded increment.
+- Begin with manually triggered analysis and explicit lesson approval, no schedule.
+- Retain historical metadata for publishing, history and audit; remove its learning
+  access paths rather than deleting legitimate saved packages or source videos.
+
+2. CURRENT SOURCE FINDINGS
+
+- metadataGenerationService.ts: buildLearningContext selects approved, rejected and
+  high-performing saved packages; formatLearningExamples serializes their factual
+  titles, description openers and tags into generation prompts.
+- aiProfileLearningService.ts: adaptive_prompt also injects feedback totals and
+  candidate-angle summaries; enabled task knowledge is another prompt input.
+- metadataScoringService.ts: historical approved/high-performing example counts
+  affect scores, including recommendation selection through generation service.
+- contracts.ts, aiProfileService.ts, remainingActionSchemas.ts and renderer settings
+  expose retrieval/adaptive modes and three example-inclusion flags.
+- Provenance records donor clip IDs and selected knowledge/feedback IDs.
+- ADR-0009 permits automatic feedback evidence today. This plan narrows metadata
+  behavior to approved lessons; document that task-specific superseding decision.
+- Existing scoped learning tests protect profile/task isolation. Preserve those
+  protections for other tasks while replacing metadata expectations.
+
+3. TARGET FLOW AND INFORMATION BOUNDARY
+
+Owned-channel performance records + linked local clips/transcripts
+ -> deterministic eligibility and comparison cohorts
+ -> bounded content evidence extraction
+ -> AI lesson proposals with evidence and limitations
+ -> review diff / edit / approve / reject
+ -> immutable approved lesson versions
+ -> applicable guidance + selected clip evidence
+ -> metadata generation -> grounding validation -> candidate review
+
+The analyst and generator must use separate typed input builders, not whole
+database records with fields removed later. Analyst allowlist: opaque clip IDs,
+duration, transcript/segment evidence, optional supported frame observations,
+explicit content category, publish age and numeric performance snapshots.
+No old display names, titles, descriptions, hashtags, tags, variants, free-form
+feedback or metadata-bearing analytics summaries. Use structured measurements
+from performance services, not prose coaching responses containing old metadata.
+Never infer a category from historical titles. Unclassified clips can be reviewed
+manually or grouped using content-only evidence.
+
+The generator has no historical-example repository dependency. Lesson evidence
+IDs may be recorded for audit but must not trigger donor-record hydration.
+
+4. DELIVERY PHASE A: REMOVE LEGACY METADATA LEARNING FIRST
+
+Ship as an independently usable change before adding the analyst:
+- Delete metadata example selectors/formatters, prompt sections and LearningContext
+  plumbing. Remove raw approved/rejected/high-performing example retrieval.
+- Stop metadata from consuming buildAdaptiveGuidance and legacy knowledge-entry
+  text. Existing entries are legacy, inactive for metadata, available for review.
+  Do not automatically promote them to approved lessons.
+- Replace metadata settings with lessons disabled/enabled. Until lessons exist,
+  generation uses the current clip and reviewed profile editorial instructions.
+- Remove example-count bonuses from metadata scoring and recommendation selection;
+  preserve the remaining formula and document the resulting score change. Do not
+  replace them with a lesson-count bonus or silently retune other weights.
+- Audit all generation entry points: all sections, individual sections, coach
+  handoff, retry, append and heuristic fallback. All use the same clean builder.
+- Saved worker prompts can themselves contain old clip facts. Inventory and flag
+  those instructions for review, show proposed edits, and keep reviewed editorial
+  preferences. Do not silently rewrite custom prompts or claim the boundary is
+  complete while unreviewed legacy learning instructions still enter requests.
+- Keep the current draft separate from source evidence. A previously generated
+  draft must not establish an event or speaker fact. Validate continuity hints
+  against selected-clip evidence; support clean regeneration without those hints.
+- Existing variants are not repaired automatically. Mark legacy generations as
+  predating this change, offer regeneration, and apply grounding validation before
+  recommending or reusing them. Preserve scheduled/published packages.
+
+Phase A acceptance: unique donor facts in any legacy store never appear in any
+metadata request, even when all old learning switches were enabled. Generation
+works without lessons, and scores do not depend on historical example counts.
+
+5. DELIVERY PHASE B: LESSON STORAGE AND REVIEW
+
+Add dedicated lesson, lesson-version, analysis-run and decision/audit records to
+existing JSON persistence; use additive, idempotent normalization and backup before
+migration. No new database engine, vector store or multi-agent framework needed.
+
+Each lesson version contains:
+- Stable lesson ID, immutable version ID, task/profile scope and applicable kinds.
+- General guidance, applicability, exceptions and observation vs hypothesis label.
+- Confidence explanation, sample size, cohort/metric definitions and evidence IDs.
+- Source content/performance timestamps, analysis model and prompt version.
+- Proposed/approved/rejected/superseded/retired status and decision timestamps.
+
+Editing an approved lesson creates a proposal; its approved predecessor remains
+active until replacement approval. Retirement requires an explicit decision.
+Approval cannot change worker prompts, model assignments or scoring weights.
+
+UI: a compact Metadata Lessons area reachable from Performance and metadata AI
+profile settings. Show active lessons, proposals, evidence, limitations and version
+diff. Controls: analyse, edit proposal, approve, reject, retire and inspect history.
+Selecting no active lessons remains a supported mode. Scope defaults to the
+originating profile; cross-profile sharing requires an explicit user action.
+
+6. DELIVERY PHASE C: PERFORMANCE AND CONTENT ANALYST
+
+Use a bounded app-owned local AI task with an explicit assignment/configuration;
+do not silently repurpose the current metadata worker or change assignments.
+Reuse the action executor, job lifecycle, cancellation and local-AI scheduler.
+
+- Start from owned-channel measurements and explicit local clip/video linkage.
+  Exclude unlinked videos rather than guessing identity from a title.
+- Show eligible/excluded counts and reasons before running. Bound batch size,
+  content length, frame count and runtime; checkpoint work and support cancellation.
+- Compare similar duration, publish-age and content cohorts. Include a comparable
+  ordinary-performing baseline to avoid learning only from winners.
+- Treat unavailable metrics as missing, never zero; show stale data and distinguish
+  organic observations from causal claims. Do not invent CTR or retention curves.
+- Derive content features from transcripts first: hook timing, setup, payoff,
+  surprise and supported speaker/action evidence. Label visual claims unavailable
+  unless frames/video were actually inspected by a supported vision path.
+- Use multiple independent clips to support broad proposals. A single-clip finding
+  remains a weak observation. If data are insufficient, return no proposal with a
+  clear reason; never fill a quota by inventing lessons.
+- Require evidence references for each proposed rule. Prohibit event-specific
+  names, quotes and donor narratives in executable lesson guidance.
+- Detect overlap/conflicts with active lessons. Propose a revision/retirement with
+  supporting evidence, never overwrite an approved version automatically.
+- Treat transcripts and source text as untrusted evidence, not instructions.
+
+Limitation: excluding historical metadata prevents estimating its effectiveness.
+V1 lessons describe content/performance patterns and packaging hypotheses. Future
+prospective experiments can evaluate those hypotheses under a separately agreed
+design; do not claim that high views prove a title formula works.
+
+7. DELIVERY PHASE D: APPLY LESSONS AND VALIDATE OUTPUT
+
+- Select only active approved lesson versions for the current profile/task, requested
+  metadata kinds and evidence-supported applicability. Start with deterministic
+  filtering and a bounded prompt budget, not semantic retrieval of old clips.
+- Snapshot versions when a request begins. Record current clip/transcript identity,
+  lesson versions, generation model and grounding result. Later lesson edits cannot
+  alter that historical manifest.
+- Pass only guidance/applicability/exception fields to generation, never evidence
+  excerpts, donor titles, evidence narratives or raw performance records.
+- Validate structured output and compare factual claims to selected-clip evidence.
+  Use deterministic identity/speaker checks plus a separate bounded grounding pass
+  where needed. A model verifier reduces risk; it does not guarantee truth.
+- Classify unsupported/uncertain claims. Retry once with corrective evidence; if
+  still unresolved, withhold the candidate with a useful reason. Do not accept
+  schema-valid factual contamination or silently switch to invented fallback facts.
+- Sparse transcripts may not describe visual action. Let the user review a factual
+  clip note or supply supported visual evidence rather than borrowing a narrative.
+- Reject stale results when clip selection or evidence changes during generation.
+
+8. MIGRATION AND COMPLETE REMOVAL CHECKLIST
+
+- Update shared contracts, action schemas, preload/IPC adapters, API clients,
+  settings drafts/defaults/normalizers, imports/exports and documentation together.
+- New metadata requests stop writing donor IDs; keep old manifests readable for
+  audit using a versioned legacy type. Other task provenance remains compatible.
+- Remove metadata-only obsolete helpers/imports/tests, flags and UI copy. Shared
+  flags remain only for tasks still using them; hidden legacy metadata flags have
+  no runtime effect and cannot be revived by importing an old backup/profile.
+- Backup import, reset/default restoration and custom-profile creation enforce
+  the new boundary. Never auto-approve imported lessons; validate and review them.
+- Update Data Management copy that says saved metadata is retained for AI learning;
+  make lesson/evidence retention, export and cleanup rules explicit. Retiring a
+  lesson or removing a clip must not orphan its audit snapshot.
+- Update ADR-0001/0004/0009 references, scoped-ai-learning.md and relevant product
+  guidance to distinguish metadata lessons from remaining discovery learning.
+
+9. VERIFICATION AND RELEASE GATES
+
+Automated:
+- Exact sentinel/grenade donor fixture paired with the sparse 'Oh hey there' clip.
+  Assert donor strings absent from analyst/generator inputs across all entry points.
+- Put unique canaries in historical packages, variants, knowledge, feedback and
+  analytics prose; prove each is excluded rather than only checking prompt wording.
+- Prove proposed/rejected/retired lessons, foreign profiles and imported unapproved
+  lessons cannot affect generation. Verify immutable version snapshots and audit.
+- Verify create/edit/approve/retire, cancellation/restart, missing data, comparison
+  eligibility, conflicts, prompt budgets and no mutation of protected settings.
+- Verify grounding rejection/retry, contaminated current drafts, legacy variants,
+  sparse evidence, supported facts and clip-switch/evidence-change races.
+- Migrate an existing store and old backup twice; preserve published/scheduled data
+  and unrelated tasks. Verify removal of historical example score bonuses.
+- Run TypeScript checks, relevant Node suites, production build, then full suite.
+
+Manual after a full Electron restart:
+- Confirm old example controls are gone for metadata and cannot re-enable learning.
+- Generate the affected clip with no lessons; inspect request manifest and output.
+- Analyse a small eligible cohort; review evidence and approve one general lesson.
+- Generate two different clips; guidance transfers while their facts stay separate.
+- Edit/reject/retire a lesson, switch clips during a run, restart, export/import;
+  confirm active versions, audit history and pending decisions remain correct.
+- Exercise Find Clips to confirm unrelated learning remains intact.
+
+Release is gated separately on implementation, automated checks and live acceptance.
+Do not describe automated success as proof of reliable model behavior.
+
+10. EXECUTION DECISIONS
+
+- Strict exclusion applies to both analyst and generator.
+- Metadata-only replacement; discovery feedback remains scoped and unchanged.
+- Preview exposes configurable defaults of two days and twenty measured views,
+  with four distinct comparable videos per cohort and snapshots at most 14 days old.
+  These are starting filters, not evidence of statistical significance.
+- V1 is transcript-only. Vision inspection is not claimed or implemented here.
+- Executable lessons use a controlled strategy vocabulary. AI observations and
+  supporting quotes remain review-only; users edit strategy, scope and sections.
+- YouTube-library generation requires a unique local clip/channel link and cannot
+  substitute old remote metadata when source evidence is absent.
+- No general store/lesson import UI exists; new import functionality is outside
+  this change. Legacy configuration cannot reactivate deleted learning paths.
+
+11. IMPLEMENTATION AND ACCEPTANCE RECORD
+
+Implemented: legacy metadata retrieval/adaptive guidance removal; score-bonus
+removal; schema-5 backup/migration; lesson proposals, review, revisions, retirement,
+audit snapshots; bounded analyst preview/run/cancel/recovery; compiled approved
+guidance; grounding verification/retry/withholding; stale-evidence filtering;
+metadata and Performance review screens; source-based YouTube-library generation;
+updated governance and architecture documentation.
+
+Verification completed: TypeScript checks, production build, all 234 Node/Electron
+tests and diff whitespace checks pass. The isolated lesson review screen was
+rendered and visually inspected. Tests include canaries, the sentinel/grenade
+regression, lifecycle/recovery, provenance and scoring independence.
+
+Read-only preview of the current real store: 12 eligible clips, 8 selected into
+comparable cohorts with the initial filters. No real-model analysis was run.
+
+Live acceptance still required after a full Electron restart: actual channel cohort,
+real model analysis/output quality, then generation for two unrelated clips. No
+real user store migration, active worker assignment, lesson approval, scheduled
+post or published metadata was changed during implementation/testing.
+
+Recommended order: A -> B -> C -> D. Phase A removes the demonstrated contamination
+path immediately; later phases restore learning through reviewed general lessons.
