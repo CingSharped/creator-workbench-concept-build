@@ -14,6 +14,14 @@ The build demonstrated that those steps can work together in one local-first wor
 
 The packaged app runs without Node.js or a source checkout. To build from source, see the setup instructions below.
 
+## What the concept build left open
+
+- **Local thumbnail generation** was not built. The concept can suggest existing images or sampled frames. Generating new images locally and accepting a custom prompt are candidates for version two.
+- **Burned-in subtitles** were not built. The concept supports transcript editing, SRT files, and YouTube captions. Rendering subtitles into the video itself is a candidate for version two.
+- **Owned-video editing and local AI setup** were partially built. The concept has drafts, single and bulk metadata edits, hardware detection, and a model catalogue. Better conflict and retry handling, richer AI context, and model recommendations and readiness checks for each task are candidates for version two.
+
+The Windows ZIP is an unsigned portfolio demo. A signed installer and an update service were not part of the build. A live YouTube test with a fresh Google Cloud project is still pending. Any distribution plans for version two will be decided separately.
+
 ## Planning History
 
 The [decision log](decision-log.md) records how the design evolved during the concept build.
