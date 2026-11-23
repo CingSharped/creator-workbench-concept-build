@@ -8,11 +8,11 @@ The build demonstrated that those steps can work together in one local-first wor
 
 ## Try it on Windows
 
-The Windows x64 ZIP is planned for [GitHub Releases](https://github.com/CingSharped/creator-workbench-concept-build/releases). Once the **Creator Workbench Concept Build** release is available:
+The portable Windows x64 ZIP is available from the [Creator Workbench Concept Build release](https://github.com/CingSharped/creator-workbench-concept-build/releases/tag/v0.1.0-concept).
 
 1. Download the Windows x64 ZIP from the release assets.
 2. Extract the entire ZIP to a folder, then open `creator-workspace.exe` from that folder.
-3. Import a local clip to explore the workflow. Check **Settings** for media tools and local model setup. Connect a YouTube account if you want to try scheduling.
+3. Import a local clip. Use **Settings** to configure media tools and local models. To try YouTube features, provide your own Google OAuth desktop client and connect your channel.
 
 The packaged app runs without Node.js or a source checkout. To build from source, see the setup instructions below.
 
