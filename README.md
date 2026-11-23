@@ -20,7 +20,7 @@ The packaged app runs without Node.js or a source checkout. To build from source
 - **Burned-in subtitles** were not built. The concept supports transcript editing, SRT files, and YouTube captions. Rendering subtitles into the video itself is a candidate for version two.
 - **Owned-video editing and local AI setup** were partially built. The concept has drafts, single and bulk metadata edits, hardware detection, and a model catalogue. Better conflict and retry handling, richer AI context, and model recommendations and readiness checks for each task are candidates for version two.
 
-The Windows ZIP is an unsigned portfolio demo. A signed installer and an update service were not part of the build. A live YouTube test with a fresh Google Cloud project is still pending. Any distribution plans for version two will be decided separately.
+The Windows ZIP is an unsigned portfolio demo. A signed installer and an update service were not part of the build. I use the current build to post Shorts to my own YouTube channel and plan to keep using it until the next build is ready to replace it. First-time YouTube setup from the demo ZIP with a new Google Cloud project has yet to be verified. Any distribution plans for version two will be decided separately.
 
 ## Planning History
 
