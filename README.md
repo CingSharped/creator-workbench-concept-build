@@ -4,8 +4,6 @@ Creator Workbench is a Windows desktop proof of concept for turning a long recor
 
 The build demonstrated that those steps can work together in one local-first workflow while keeping publishing decisions with the creator. This repository preserves the concept build for demonstration. Any future Creator Workbench 2.0 would be developed separately.
 
-[Read the portfolio summary](docs/portfolio.md)
-
 ## Try it on Windows
 
 The portable Windows x64 ZIP is available from the [Creator Workbench Concept Build release](https://github.com/CingSharped/creator-workbench-concept-build/releases/tag/v0.1.0-concept).
