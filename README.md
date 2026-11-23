@@ -2,13 +2,13 @@
 
 Creator Workbench is a Windows desktop proof of concept for turning a long recording into a reviewed, schedulable YouTube clip in one app. It transcribes footage locally, suggests moments to clip, and lets the creator check the cut, correct the transcript, and review draft metadata before scheduling the post. Exports preserve the original footage.
 
-The build demonstrated that those steps can work together in one local-first workflow while keeping publishing decisions with the creator. This repository preserves the concept build for demonstration. Any future Creator Workbench 2.0 would be developed separately.
+The build demonstrated that those steps can work together in one local-first workflow while keeping publishing decisions with the creator. This repository preserves the finished concept build as a portfolio project. The Windows download is a demo of this build. Creator Workbench 2.0 will be developed separately.
 
 ## Try it on Windows
 
-The portable Windows x64 ZIP is available from the [Creator Workbench Concept Build release](https://github.com/CingSharped/creator-workbench-concept-build/releases/tag/v0.1.0-concept).
+[Download the portable Windows x64 demo](https://github.com/CingSharped/creator-workbench-concept-build/releases/tag/v0.1.0-concept).
 
-1. Download the Windows x64 ZIP from the release assets.
+1. Download the Windows x64 ZIP listed under Assets.
 2. Extract the entire ZIP to a folder, then open `creator-workspace.exe` from that folder.
 3. Import a local clip. Use **Settings** to configure media tools and local models. To try YouTube features, provide your own Google OAuth desktop client and connect your channel.
 
@@ -16,7 +16,7 @@ The packaged app runs without Node.js or a source checkout. To build from source
 
 ## Planning History
 
-The [product plan](creator-workspace-current-product-plan-2026-08-11.md) and [release plan](creator-workspace-release-rollout-plan.txt) record the earlier invited beta proposal. The [decision log](decision-log.md) records how the design evolved.
+The [decision log](decision-log.md) records how the design evolved during the concept build.
 
 Local desktop app for:
 
@@ -34,10 +34,10 @@ Performance is scoped to the user's owned YouTube account, channel history, and 
 - [Current architecture and data flow](docs/architecture/creator-workspace-data-flow-and-erd.md)
 - [Current architecture diagrams and source evidence](docs/architecture/creator-workbench-architecture.md)
 
-- [Current product plan and MVP closure](creator-workspace-current-product-plan-2026-08-11.md)
+- [Historical product plan](creator-workspace-current-product-plan-2026-08-11.md)
 - [Decision log](decision-log.md)
 - [Architecture decision records](docs/adr/README.md)
-- [Active component-first UI plan](creator-workspace-component-first-ui-rebuild-plan-2026-08-08.md)
+- [Component-first UI design notes](creator-workspace-component-first-ui-rebuild-plan-2026-08-08.md)
 - [Archived planning documents](docs/archive/README.md)
 - [Supporting research](docs/research/README.md)
 
